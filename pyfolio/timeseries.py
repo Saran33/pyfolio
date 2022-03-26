@@ -1232,6 +1232,13 @@ def extract_interesting_date_ranges(returns, periods=None):
             if len(period) == 0:
                 continue
             ranges[name] = period
+        except KeyError:
+          start = start.tz_localize(tz='UTC')
+          end = end.tz_localize(tz='UTC')
+          period = returns_dupe.loc[start:end]
+          if len(period) == 0:
+              continue
+          ranges[name] = period
         except BaseException:
             continue
 
